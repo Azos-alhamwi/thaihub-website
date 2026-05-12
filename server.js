@@ -45,5 +45,5 @@ const server = http.createServer((request, response) => {
 });
 
 server.listen(port, host, () => {
-  console.log(`ThaiHub is running at http://${host}:${port}`);
+  console.log(`ThaiBridge Property is running at http://${host}:${port}`);
 });

@@ -1,4 +1,4 @@
-# ThaiHub Website
+# ThaiBridge Property Website
 
 Static real estate landing page with an interactive Thailand region map.
 
@@ -30,13 +30,13 @@ You can also open `index.html` directly in a browser.
 The map is ready for dashboard-driven property markers. From JavaScript, call:
 
 ```js
-window.ThaiHubMap.addProperty({ province: "Phuket", title: "Sea view villa" });
+window.ThaiBridgeMap.addProperty({ province: "Phuket", title: "Sea view villa" });
 ```
 
 Or replace all pins:
 
 ```js
-window.ThaiHubMap.setProperties([{ province: "Bangkok Metropolis", title: "City condo" }]);
+window.ThaiBridgeMap.setProperties([{ province: "Bangkok Metropolis", title: "City condo" }]);
 ```
 
 ## WhatsApp number

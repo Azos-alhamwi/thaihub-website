@@ -242,10 +242,10 @@ const translations = {
     propertyTwoText: "Beach-access villas for lifestyle use and managed tourism rentals.",
     propertyThreeTitle: "Northern relocation route",
     propertyThreeText: "Quiet neighborhoods, mountain air, and lower monthly costs.",
-    aboutKicker: "About ThaiHub",
+    aboutKicker: "About ThaiBridge Property",
     aboutTitle: "Regional insight before property selection",
     aboutText:
-      "ThaiHub helps international buyers compare regions first, then match lifestyle, rental demand, budget, and ownership goals to the right opportunities.",
+      "ThaiBridge Property helps international buyers compare regions first, then match lifestyle, rental demand, budget, and ownership goals to the right opportunities.",
     contactKicker: "Start with the region",
     contactTitle: "Tell us where you want to explore",
     footerText: "Interactive Thailand real estate gateway.",
@@ -288,7 +288,7 @@ const translations = {
     propertyTwoText: "فلل قريبة من الشاطئ للسكن الشخصي والإيجار السياحي المدار.",
     propertyThreeTitle: "مسار الانتقال للشمال",
     propertyThreeText: "أحياء هادئة وهواء جبلي وتكاليف شهرية أقل.",
-    aboutKicker: "عن ThaiHub",
+    aboutKicker: "عن ThaiBridge Property",
     aboutTitle: "فهم المنطقة قبل اختيار العقار",
     aboutText:
       "نساعد المشترين الدوليين على مقارنة المناطق أولاً، ثم مطابقة نمط الحياة والطلب الإيجاري والميزانية وهدف التملك مع الفرصة المناسبة.",
@@ -334,10 +334,10 @@ const translations = {
     propertyTwoText: "วิลล่าใกล้ชายหาดสำหรับพักเองและปล่อยเช่าท่องเที่ยว",
     propertyThreeTitle: "เส้นทางย้ายสู่ภาคเหนือ",
     propertyThreeText: "ย่านสงบ อากาศภูเขา และค่าใช้จ่ายต่ำกว่า",
-    aboutKicker: "เกี่ยวกับ ThaiHub",
+    aboutKicker: "เกี่ยวกับ ThaiBridge Property",
     aboutTitle: "เข้าใจพื้นที่ก่อนเลือกทรัพย์",
     aboutText:
-      "ThaiHub ช่วยผู้ซื้อต่างชาติเปรียบเทียบภูมิภาคก่อน แล้วจึงจับคู่ไลฟ์สไตล์ ความต้องการเช่า งบประมาณ และเป้าหมายการถือครองกับโอกาสที่เหมาะสม",
+      "ThaiBridge Property ช่วยผู้ซื้อต่างชาติเปรียบเทียบภูมิภาคก่อน แล้วจึงจับคู่ไลฟ์สไตล์ ความต้องการเช่า งบประมาณ และเป้าหมายการถือครองกับโอกาสที่เหมาะสม",
     contactKicker: "เริ่มจากภูมิภาค",
     contactTitle: "บอกเราว่าคุณอยากสำรวจที่ไหน",
     footerText: "ประตูสู่อสังหาริมทรัพย์ไทยแบบอินเทอร์แอคทีฟ",
@@ -426,11 +426,21 @@ let propertyPins = [
     id: "project-centara-sonrisa",
     province: "Chon Buri",
     title: "Centara Sonrisa Residences & Suites Sriracha",
+    city: "Sriracha",
+    region: "eastern-seaboard",
+    regionLabel: "Chon Buri",
+    category: "Hotel investment",
+    shortDescription: "145-room hotel opportunity near Pattaya, Laem Chabang, and U-Tapao Airport.",
     subtitle: "Hotel for sale - 145 rooms - Sriracha",
     location: "Sriracha, Chon Buri",
+    features: ["Near Pattaya", "Coastal Sriracha", "Hotel asset"],
     price: "THB 750M",
+    priceFromOMR: "",
     image: "assets/projects/centara-p1-1.jpg",
+    thumbnail: "assets/projects/centara-p1-1.jpg",
+    detailUrl: "property-centara-sonrisa.html",
     detailsUrl: "property-centara-sonrisa.html",
+    coordinates: { province: "Chon Buri", offset: { x: -26, y: -4 } },
     cta: "Contact on WhatsApp",
     offset: { x: -26, y: -4 },
   },
@@ -438,11 +448,21 @@ let propertyPins = [
     id: "project-sonrisa-condominium",
     province: "Chon Buri",
     title: "Sonrisa Sriracha Condominium",
+    city: "Sriracha",
+    region: "eastern-seaboard",
+    regionLabel: "Chon Buri",
+    category: "Seaside condominium",
+    shortDescription: "Seaside condominium units in Sriracha with pool, fitness, sauna, and library facilities.",
     subtitle: "1BR and duplex units - seaside Sriracha",
     location: "Sriracha, Chon Buri",
+    features: ["Sea view", "Near Pattaya", "Ready to move"],
     price: "From THB 2.9M",
+    priceFromOMR: "",
     image: "assets/projects/sonrisa-p1-1.jpg",
+    thumbnail: "assets/projects/sonrisa-p1-1.jpg",
+    detailUrl: "property-sonrisa-sriracha.html",
     detailsUrl: "property-sonrisa-sriracha.html",
+    coordinates: { province: "Chon Buri", offset: { x: 20, y: 18 } },
     cta: "Contact on WhatsApp",
     offset: { x: 20, y: 18 },
   },
@@ -614,10 +634,14 @@ function ensureMapControls() {
   const controls = document.createElement("div");
   controls.className = "map-zoom-controls";
   controls.innerHTML = `
+    <button type="button" data-map-zoom="in" aria-label="Zoom in"><i data-lucide="plus"></i></button>
+    <button type="button" data-map-zoom="out" aria-label="Zoom out"><i data-lucide="minus"></i></button>
     <button type="button" data-map-zoom="reset" aria-label="Reset map"><i data-lucide="rotate-ccw"></i></button>
   `;
   mapHost.appendChild(controls);
 
+  controls.querySelector('[data-map-zoom="in"]').addEventListener("click", () => zoomMapBy(0.82));
+  controls.querySelector('[data-map-zoom="out"]').addEventListener("click", () => zoomMapBy(1.18));
   controls.querySelector('[data-map-zoom="reset"]').addEventListener("click", resetMapZoom);
 
   if (window.lucide) window.lucide.createIcons();
@@ -654,11 +678,13 @@ function updateMapZoomState(box, zoomed = true) {
   mapHost?.style.setProperty("--map-zoom-level", zoomLevel.toFixed(2));
 }
 
-function applyMapViewBox(box, zoomed = true) {
+function applyMapViewBox(box, zoomed = true, options = {}) {
   if (!thaiMapSvg) return;
   thaiMapSvg.setAttribute("viewBox", `${box.x} ${box.y} ${box.width} ${box.height}`);
   updateMapZoomState(box, zoomed);
-  renderProvinceLabels(zoomed ? activeRegion : null);
+  if (options.renderLabels !== false) {
+    renderProvinceLabels(zoomed ? activeRegion : null);
+  }
   if (activeTooltipData) {
     setTooltipPosition(ensureMapTooltip(), activeTooltipData.x, activeTooltipData.y);
   }
@@ -670,7 +696,7 @@ function setMapViewBox(box, zoomed = true, options = {}) {
   const start = getCurrentViewBox();
   const animate = options.animate !== false && start;
   if (!animate) {
-    applyMapViewBox(box, zoomed);
+    applyMapViewBox(box, zoomed, options);
     return;
   }
 
@@ -696,7 +722,7 @@ function setMapViewBox(box, zoomed = true, options = {}) {
     }
 
     mapZoomAnimation = null;
-    applyMapViewBox(box, zoomed);
+    applyMapViewBox(box, zoomed, options);
   }
 
   mapZoomAnimation = requestAnimationFrame(step);
@@ -770,7 +796,7 @@ function panMapByPixels(deltaX, deltaY, startViewBox = getCurrentViewBox()) {
       height: startViewBox.height,
     },
     getMapZoomLevel(startViewBox) > 1.02,
-    { animate: false },
+    { animate: false, renderLabels: false },
   );
 }
 
@@ -793,7 +819,7 @@ function updatePinchZoom() {
       height: nextHeight,
     },
     nextWidth < originalMapViewBox.width,
-    { animate: false },
+    { animate: false, renderLabels: false },
   );
 }
 
@@ -880,6 +906,9 @@ function bindMapGestures() {
         mapGesture.startViewBox = getCurrentViewBox();
         remaining.startX = remaining.clientX;
         remaining.startY = remaining.clientY;
+      } else if (mapGesture.pointers.size === 0) {
+        const zoomed = getMapZoomLevel() > 1.02;
+        renderProvinceLabels(zoomed ? activeRegion : null);
       }
     });
   });
@@ -972,12 +1001,14 @@ function renderProvinceLabels(regionId) {
 function getPropertyFocusData(propertyId) {
   const property = propertyPins.find((pin) => pin.id === propertyId);
   if (!property) return null;
-  const point = getProvincePoint(property);
+  const coordinates = property.coordinates || {};
+  const point = getProvincePoint({ ...property, province: coordinates.province || property.province });
   if (!point) return null;
+  const offset = coordinates.offset || property.offset || {};
   return {
     ...property,
-    x: point.x + (property.offset?.x || 0),
-    y: point.y + (property.offset?.y || 0),
+    x: point.x + (offset.x || 0),
+    y: point.y + (offset.y || 0),
     region: point.region,
     badge: property.price || "Contact",
     markerType: "property",
@@ -1025,10 +1056,12 @@ function renderPropertyPins() {
   layer.textContent = "";
 
   propertyPins.forEach((pin) => {
-    const point = getProvincePoint(pin);
+    const coordinates = pin.coordinates || {};
+    const point = getProvincePoint({ ...pin, province: coordinates.province || pin.province });
     if (!point) return;
-    const x = point.x + (pin.offset?.x || 0);
-    const y = point.y + (pin.offset?.y || 0);
+    const offset = coordinates.offset || pin.offset || {};
+    const x = point.x + (offset.x || 0);
+    const y = point.y + (offset.y || 0);
 
     const marker = document.createElementNS(namespace, "g");
     marker.classList.add("property-marker");
@@ -1142,8 +1175,9 @@ function setTooltipPosition(tooltip, x, y) {
   const hostRect = mapHost.getBoundingClientRect();
   const left = ((x - viewBox.x) / viewBox.width) * svgRect.width + svgRect.left - hostRect.left;
   const top = ((y - viewBox.y) / viewBox.height) * svgRect.height + svgRect.top - hostRect.top;
+  const tooltipHeight = tooltip.offsetHeight || 240;
   tooltip.style.left = `${Math.min(Math.max(left, 118), hostRect.width - 118)}px`;
-  tooltip.style.top = `${Math.min(Math.max(top + 24, 84), Math.max(84, hostRect.height - 260))}px`;
+  tooltip.style.top = `${Math.min(Math.max(top + 24, 84), Math.max(84, hostRect.height - tooltipHeight - 14))}px`;
 }
 
 function showMapTooltip(data) {
@@ -1158,23 +1192,45 @@ function showMapTooltip(data) {
       ?.querySelector(`[data-marker-type="property"][data-marker-id="${data.id}"]`)
       ?.classList.add("focused");
   }
-  const detailsLink = data.detailsUrl
-    ? `<a class="tooltip-action" href="${data.detailsUrl}">View Details</a>`
+  const detailUrl = data.detailUrl || data.detailsUrl;
+  const detailsLink = detailUrl
+    ? `<a class="tooltip-action" href="${detailUrl}">View Details</a>`
     : "";
   const whatsappLink =
     data.markerType === "property"
-      ? `<a class="tooltip-action whatsapp" href="https://wa.me/66644462456?text=${encodeURIComponent(`Hello ThaiHub, I want details about ${data.title}.`)}" target="_blank" rel="noreferrer">WhatsApp</a>`
+      ? `<a class="tooltip-action whatsapp" href="https://wa.me/66644462456?text=${encodeURIComponent(`Hello ThaiBridge Property, I want details about ${data.title}.`)}" target="_blank" rel="noreferrer">WhatsApp</a>`
       : "";
-  const media = data.markerType === "property" ? "" : `<img src="${data.image}" alt="" />`;
   tooltip.dataset.markerType = data.markerType || "";
-  tooltip.innerHTML = `
-    <button class="tooltip-close" type="button" aria-label="Close project card"><i data-lucide="x"></i></button>
-    ${media}
-    <span>${data.markerType === "property" ? data.location || data.badge : data.badge}</span>
-    <strong>${data.title}</strong>
-    <small>${data.subtitle || ""}</small>
-    ${detailsLink || whatsappLink ? `<div class="tooltip-actions">${detailsLink}${whatsappLink}</div>` : ""}
-  `;
+
+  if (data.markerType === "property") {
+    const projectImage = data.thumbnail || data.image;
+    const location = [data.city, data.regionLabel].filter(Boolean).join(", ") || data.location || "Thailand";
+    const features = Array.isArray(data.features) && data.features.length
+      ? `<p class="tooltip-features">${data.features.slice(0, 3).join(" • ")}</p>`
+      : "";
+    const price = data.priceFromOMR
+      ? `Starting from OMR ${data.priceFromOMR}`
+      : "Starting from Contact us";
+    tooltip.innerHTML = `
+      <button class="tooltip-close" type="button" aria-label="Close project card"><i data-lucide="x"></i></button>
+      <img class="tooltip-image" src="${projectImage}" alt="${data.title}" loading="lazy" decoding="async" />
+      <span>${location}</span>
+      <strong>${data.title}</strong>
+      <small>${data.shortDescription || data.subtitle || ""}</small>
+      ${features}
+      <p class="tooltip-price">${price}</p>
+      ${detailsLink ? `<div class="tooltip-actions">${detailsLink}</div>` : ""}
+    `;
+  } else {
+    tooltip.innerHTML = `
+      <button class="tooltip-close" type="button" aria-label="Close card"><i data-lucide="x"></i></button>
+      <img class="tooltip-image" src="${data.image}" alt="${data.title}" loading="lazy" decoding="async" />
+      <span>${data.badge}</span>
+      <strong>${data.title}</strong>
+      <small>${data.subtitle || ""}</small>
+      ${detailsLink || whatsappLink ? `<div class="tooltip-actions">${detailsLink}${whatsappLink}</div>` : ""}
+    `;
+  }
   tooltip.querySelector(".tooltip-close")?.addEventListener("click", hideMapTooltip);
   if (window.lucide) window.lucide.createIcons();
   setTooltipPosition(tooltip, data.x, data.y);
@@ -1188,7 +1244,9 @@ function hideMapTooltip() {
 }
 
 function bindMarkerTooltip(marker, data) {
-  marker.addEventListener("mouseenter", () => showMapTooltip(data));
+  marker.addEventListener("mouseenter", () => {
+    if (data.markerType !== "property") showMapTooltip(data);
+  });
   marker.addEventListener("focus", () => showMapTooltip(data));
   marker.addEventListener("click", (event) => {
     event.stopPropagation();
@@ -1283,7 +1341,7 @@ setLanguage(activeLang);
 
 loadGadmMap();
 
-window.ThaiHubMap = {
+const mapApi = {
   addProperty(property) {
     propertyPins = [...propertyPins, property];
     renderPropertyPins();
@@ -1303,6 +1361,9 @@ window.ThaiHubMap = {
     return focusPropertyOnMap(propertyId);
   },
 };
+
+window.ThaiBridgeMap = mapApi;
+window.ThaiHubMap = mapApi;
 
 if (window.lucide) {
   window.lucide.createIcons();

@@ -110,43 +110,51 @@ svg {
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 11px;
   min-width: max-content;
   letter-spacing: 0;
 }
 
-.brand-logo {
+.brand-icon {
   display: block;
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+  object-fit: contain;
+  filter:
+    drop-shadow(0 0 12px rgba(243, 120, 41, 0.22))
+    drop-shadow(0 4px 12px rgba(0, 0, 0, 0.28));
+  image-rendering: auto;
+}
+
+.brand-copy {
+  display: grid;
+  gap: 3px;
+}
+
+.brand-logo {
+  display: none;
   width: auto;
   object-fit: contain;
   image-rendering: auto;
 }
 
-.brand-logo-main {
-  height: 58px;
-  max-width: 230px;
-}
-
-.brand-logo-icon {
-  display: none;
-  height: 44px;
-  max-width: 44px;
-}
-
 .brand strong {
   display: block;
-  font-size: clamp(1.16rem, 1.8vw, 1.46rem);
-  line-height: 1;
-  text-transform: uppercase;
-  letter-spacing: 2px;
+  color: #fff7df;
+  font-size: clamp(1rem, 1.35vw, 1.18rem);
+  line-height: 1.02;
+  text-transform: none;
+  letter-spacing: 0;
 }
 
 .brand small {
   display: block;
   margin-top: 2px;
-  color: var(--gold-2);
-  font-size: 0.72rem;
-  letter-spacing: 0.4px;
+  color: #eaa04a;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0;
 }
 
 .brand-mark {
@@ -692,6 +700,25 @@ h1 {
     drop-shadow(0 2px 8px rgba(0, 0, 0, 0.46));
 }
 
+.property-marker .property-marker-diamond,
+.property-marker .property-marker-dot {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 150ms ease;
+}
+
+.property-marker:hover .property-marker-diamond,
+.property-marker:focus .property-marker-diamond,
+.property-marker.focused .property-marker-diamond {
+  transform: scale(1.08);
+}
+
+.property-marker:hover .property-marker-dot,
+.property-marker:focus .property-marker-dot,
+.property-marker.focused .property-marker-dot {
+  transform: scale(1.08);
+}
+
 .property-marker.focused {
   filter: drop-shadow(0 0 16px rgba(255, 216, 121, 0.95));
 }
@@ -742,7 +769,7 @@ h1 {
 }
 
 .map-hover-card[data-marker-type="property"] {
-  width: 220px;
+  width: 272px;
   border-color: rgba(255, 216, 121, 0.48);
   background: rgba(3, 24, 38, 0.96);
 }
@@ -773,11 +800,20 @@ h1 {
   transform: translate(-50%, 12px) scale(1);
 }
 
-.map-hover-card img {
+.map-hover-card img,
+.tooltip-image {
   width: 100%;
   height: 96px;
   object-fit: cover;
   display: block;
+}
+
+.map-hover-card[data-marker-type="property"] .tooltip-image {
+  width: calc(100% - 18px);
+  height: auto;
+  aspect-ratio: 16 / 9;
+  margin: 9px 9px 0;
+  border-radius: 8px;
 }
 
 .map-hover-card span,
@@ -804,10 +840,30 @@ h1 {
 
 .map-hover-card small {
   padding-top: 5px;
-  padding-bottom: 12px;
+  padding-bottom: 8px;
   color: var(--muted);
   font-size: 0.78rem;
   line-height: 1.35;
+}
+
+.tooltip-features,
+.tooltip-price {
+  margin: 0;
+  padding-inline: 14px;
+}
+
+.tooltip-features {
+  padding-bottom: 7px;
+  color: #e4f1f5;
+  font-size: 0.75rem;
+  line-height: 1.35;
+}
+
+.tooltip-price {
+  padding-bottom: 12px;
+  color: var(--gold-2);
+  font-size: 0.8rem;
+  font-weight: 900;
 }
 
 .tooltip-actions {
@@ -838,7 +894,7 @@ h1 {
 }
 
 .map-hover-card[data-marker-type="property"] .tooltip-actions {
-  padding-top: 2px;
+  padding-top: 0;
 }
 
 .map-hover-card[data-marker-type="property"] .tooltip-action.whatsapp {
@@ -1545,14 +1601,18 @@ h1 {
     padding: 14px 16px;
   }
 
-  .brand-logo-main {
-    display: none;
+  .brand-icon {
+    width: 40px;
+    height: 40px;
+    flex-basis: 40px;
   }
 
-  .brand-logo-icon {
-    display: block;
-    height: 42px;
-    max-width: 42px;
+  .brand strong {
+    font-size: 0.98rem;
+  }
+
+  .brand small {
+    font-size: 0.62rem;
   }
 
   .menu-toggle {
@@ -1668,6 +1728,8 @@ h1 {
 
   .map-hover-card[data-marker-type="property"] {
     width: min(100% - 28px, 310px);
+    max-height: min(58vh, 390px);
+    overflow-y: auto;
   }
 
   .map-zoom-controls {
@@ -1704,6 +1766,29 @@ h1 {
 }
 
 @media (max-width: 540px) {
+  .brand {
+    gap: 8px;
+  }
+
+  .brand-icon {
+    width: 38px;
+    height: 38px;
+    flex-basis: 38px;
+  }
+
+  .brand-copy {
+    max-width: 118px;
+  }
+
+  .brand strong {
+    font-size: 0.88rem;
+    line-height: 1.05;
+  }
+
+  .brand small {
+    display: none;
+  }
+
   .hero-actions,
   .contact-section {
     align-items: stretch;
