@@ -1,0 +1,6 @@
+thaihub-*-preview.png
+thaihub-*-section.png
+thaihub-preview.png
+*.log
+node_modules/
+.vercel/

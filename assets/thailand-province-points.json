@@ -1,0 +1,541 @@
+[
+  {
+    "slug": "amnat-charoen",
+    "province": "Amnat Charoen",
+    "region": "isaan-northeast",
+    "x": 712.68,
+    "y": 439.19
+  },
+  {
+    "slug": "ang-thong",
+    "province": "Ang Thong",
+    "region": "bangkok-central",
+    "x": 290.69,
+    "y": 563.34
+  },
+  {
+    "slug": "bangkok-metropolis",
+    "province": "Bangkok Metropolis",
+    "region": "bangkok-central",
+    "x": 317,
+    "y": 649.44
+  },
+  {
+    "slug": "bueng-kan",
+    "province": "Bueng Kan",
+    "region": "isaan-northeast",
+    "x": 614.34,
+    "y": 227.7
+  },
+  {
+    "slug": "buri-ram",
+    "province": "Buri Ram",
+    "region": "isaan-northeast",
+    "x": 542.2,
+    "y": 530.32
+  },
+  {
+    "slug": "chachoengsao",
+    "province": "Chachoengsao",
+    "region": "eastern-seaboard",
+    "x": 393.08,
+    "y": 663.6
+  },
+  {
+    "slug": "chai-nat",
+    "province": "Chai Nat",
+    "region": "bangkok-central",
+    "x": 259.88,
+    "y": 511.3
+  },
+  {
+    "slug": "chaiyaphum",
+    "province": "Chaiyaphum",
+    "region": "isaan-northeast",
+    "x": 438.23,
+    "y": 428.31
+  },
+  {
+    "slug": "chanthaburi",
+    "province": "Chanthaburi",
+    "region": "eastern-seaboard",
+    "x": 459.56,
+    "y": 737.35
+  },
+  {
+    "slug": "chiang-mai",
+    "province": "Chiang Mai",
+    "region": "northern-thailand",
+    "x": 140.19,
+    "y": 169.83
+  },
+  {
+    "slug": "chiang-rai",
+    "province": "Chiang Rai",
+    "region": "northern-thailand",
+    "x": 248.74,
+    "y": 71.5
+  },
+  {
+    "slug": "chon-buri",
+    "province": "Chon Buri",
+    "region": "eastern-seaboard",
+    "x": 370.32,
+    "y": 713.92
+  },
+  {
+    "slug": "chumphon",
+    "province": "Chumphon",
+    "region": "southern-thailand",
+    "x": 167.26,
+    "y": 977.21
+  },
+  {
+    "slug": "kalasin",
+    "province": "Kalasin",
+    "region": "isaan-northeast",
+    "x": 609.7,
+    "y": 368.86
+  },
+  {
+    "slug": "kamphaeng-phet",
+    "province": "Kamphaeng Phet",
+    "region": "northern-thailand",
+    "x": 210.45,
+    "y": 393.67
+  },
+  {
+    "slug": "kanchanaburi",
+    "province": "Kanchanaburi",
+    "region": "western-mountain",
+    "x": 163.19,
+    "y": 556.25
+  },
+  {
+    "slug": "khon-kaen",
+    "province": "Khon Kaen",
+    "region": "isaan-northeast",
+    "x": 493.98,
+    "y": 395.88
+  },
+  {
+    "slug": "krabi",
+    "province": "Krabi",
+    "region": "southern-thailand",
+    "x": 161.55,
+    "y": 1196.57
+  },
+  {
+    "slug": "lampang",
+    "province": "Lampang",
+    "region": "northern-thailand",
+    "x": 208.73,
+    "y": 208.09
+  },
+  {
+    "slug": "lamphun",
+    "province": "Lamphun",
+    "region": "northern-thailand",
+    "x": 159.7,
+    "y": 231.69
+  },
+  {
+    "slug": "loei",
+    "province": "Loei",
+    "region": "isaan-northeast",
+    "x": 400.31,
+    "y": 287.61
+  },
+  {
+    "slug": "lop-buri",
+    "province": "Lop Buri",
+    "region": "bangkok-central",
+    "x": 344.86,
+    "y": 515.38
+  },
+  {
+    "slug": "mae-hong-son",
+    "province": "Mae Hong Son",
+    "region": "western-mountain",
+    "x": 63.91,
+    "y": 168.38
+  },
+  {
+    "slug": "maha-sarakham",
+    "province": "Maha Sarakham",
+    "region": "isaan-northeast",
+    "x": 562.01,
+    "y": 428.17
+  },
+  {
+    "slug": "mukdahan",
+    "province": "Mukdahan",
+    "region": "isaan-northeast",
+    "x": 692,
+    "y": 378.08
+  },
+  {
+    "slug": "nakhon-nayok",
+    "province": "Nakhon Nayok",
+    "region": "eastern-seaboard",
+    "x": 372.88,
+    "y": 600.24
+  },
+  {
+    "slug": "nakhon-pathom",
+    "province": "Nakhon Pathom",
+    "region": "bangkok-central",
+    "x": 264.34,
+    "y": 629.81
+  },
+  {
+    "slug": "nakhon-phanom",
+    "province": "Nakhon Phanom",
+    "region": "isaan-northeast",
+    "x": 679.36,
+    "y": 295.25
+  },
+  {
+    "slug": "nakhon-ratchasima",
+    "province": "Nakhon Ratchasima",
+    "region": "isaan-northeast",
+    "x": 458.35,
+    "y": 530.21
+  },
+  {
+    "slug": "nakhon-sawan",
+    "province": "Nakhon Sawan",
+    "region": "bangkok-central",
+    "x": 253.37,
+    "y": 466.48
+  },
+  {
+    "slug": "nakhon-si-thammarat",
+    "province": "Nakhon Si Thammarat",
+    "region": "southern-thailand",
+    "x": 255.46,
+    "y": 1144.39
+  },
+  {
+    "slug": "nan",
+    "province": "Nan",
+    "region": "northern-thailand",
+    "x": 338.1,
+    "y": 158.93
+  },
+  {
+    "slug": "narathiwat",
+    "province": "Narathiwat",
+    "region": "southern-thailand",
+    "x": 423.1,
+    "y": 1374.65
+  },
+  {
+    "slug": "nong-bua-lam-phu",
+    "province": "Nong Bua Lam Phu",
+    "region": "isaan-northeast",
+    "x": 480.95,
+    "y": 312.9
+  },
+  {
+    "slug": "nong-khai",
+    "province": "Nong Khai",
+    "region": "isaan-northeast",
+    "x": 519.77,
+    "y": 243.13
+  },
+  {
+    "slug": "nonthaburi",
+    "province": "Nonthaburi",
+    "region": "bangkok-central",
+    "x": 296.55,
+    "y": 626.35
+  },
+  {
+    "slug": "pathum-thani",
+    "province": "Pathum Thani",
+    "region": "bangkok-central",
+    "x": 318.29,
+    "y": 613.75
+  },
+  {
+    "slug": "pattani",
+    "province": "Pattani",
+    "region": "southern-thailand",
+    "x": 388.44,
+    "y": 1320.34
+  },
+  {
+    "slug": "phangnga",
+    "province": "Phangnga",
+    "region": "southern-thailand",
+    "x": 80.24,
+    "y": 1140.51
+  },
+  {
+    "slug": "phatthalung",
+    "province": "Phatthalung",
+    "region": "southern-thailand",
+    "x": 264.18,
+    "y": 1249.03
+  },
+  {
+    "slug": "phayao",
+    "province": "Phayao",
+    "region": "northern-thailand",
+    "x": 272.49,
+    "y": 115.92
+  },
+  {
+    "slug": "phetchabun",
+    "province": "Phetchabun",
+    "region": "northern-thailand",
+    "x": 373.19,
+    "y": 408.8
+  },
+  {
+    "slug": "phetchaburi",
+    "province": "Phetchaburi",
+    "region": "western-mountain",
+    "x": 218.13,
+    "y": 724.68
+  },
+  {
+    "slug": "phichit",
+    "province": "Phichit",
+    "region": "bangkok-central",
+    "x": 292.81,
+    "y": 403.63
+  },
+  {
+    "slug": "phitsanulok",
+    "province": "Phitsanulok",
+    "region": "northern-thailand",
+    "x": 303.06,
+    "y": 331.86
+  },
+  {
+    "slug": "phra-nakhon-si-ayutthaya",
+    "province": "Phra Nakhon Si Ayutthaya",
+    "region": "bangkok-central",
+    "x": 307.83,
+    "y": 585.18
+  },
+  {
+    "slug": "phrae",
+    "province": "Phrae",
+    "region": "northern-thailand",
+    "x": 252.64,
+    "y": 212.18
+  },
+  {
+    "slug": "phuket",
+    "province": "Phuket",
+    "region": "southern-thailand",
+    "x": 106.06,
+    "y": 1216.43
+  },
+  {
+    "slug": "prachin-buri",
+    "province": "Prachin Buri",
+    "region": "eastern-seaboard",
+    "x": 412.63,
+    "y": 620.78
+  },
+  {
+    "slug": "prachuap-khiri-khan",
+    "province": "Prachuap Khiri Khan",
+    "region": "western-mountain",
+    "x": 216.97,
+    "y": 834.16
+  },
+  {
+    "slug": "ranong",
+    "province": "Ranong",
+    "region": "southern-thailand",
+    "x": 126.12,
+    "y": 1003.38
+  },
+  {
+    "slug": "ratchaburi",
+    "province": "Ratchaburi",
+    "region": "western-mountain",
+    "x": 219.75,
+    "y": 666.32
+  },
+  {
+    "slug": "rayong",
+    "province": "Rayong",
+    "region": "eastern-seaboard",
+    "x": 391.98,
+    "y": 734.66
+  },
+  {
+    "slug": "roi-et",
+    "province": "Roi Et",
+    "region": "isaan-northeast",
+    "x": 623.36,
+    "y": 436.47
+  },
+  {
+    "slug": "sa-kaeo",
+    "province": "Sa Kaeo",
+    "region": "eastern-seaboard",
+    "x": 487.48,
+    "y": 650.26
+  },
+  {
+    "slug": "sakon-nakhon",
+    "province": "Sakon Nakhon",
+    "region": "isaan-northeast",
+    "x": 626.44,
+    "y": 292.89
+  },
+  {
+    "slug": "samut-prakan",
+    "province": "Samut Prakan",
+    "region": "bangkok-central",
+    "x": 324.22,
+    "y": 661.52
+  },
+  {
+    "slug": "samut-sakhon",
+    "province": "Samut Sakhon",
+    "region": "bangkok-central",
+    "x": 278.03,
+    "y": 663.38
+  },
+  {
+    "slug": "samut-songkhram",
+    "province": "Samut Songkhram",
+    "region": "bangkok-central",
+    "x": 253.21,
+    "y": 682.55
+  },
+  {
+    "slug": "saraburi",
+    "province": "Saraburi",
+    "region": "bangkok-central",
+    "x": 354.2,
+    "y": 560.91
+  },
+  {
+    "slug": "satun",
+    "province": "Satun",
+    "region": "southern-thailand",
+    "x": 226.36,
+    "y": 1318.71
+  },
+  {
+    "slug": "si-sa-ket",
+    "province": "Si Sa Ket",
+    "region": "isaan-northeast",
+    "x": 680.52,
+    "y": 531
+  },
+  {
+    "slug": "sing-buri",
+    "province": "Sing Buri",
+    "region": "bangkok-central",
+    "x": 288.78,
+    "y": 535.12
+  },
+  {
+    "slug": "songkhla",
+    "province": "Songkhla",
+    "region": "southern-thailand",
+    "x": 312.57,
+    "y": 1285.51
+  },
+  {
+    "slug": "sukhothai",
+    "province": "Sukhothai",
+    "region": "northern-thailand",
+    "x": 228.73,
+    "y": 310.11
+  },
+  {
+    "slug": "suphan-buri",
+    "province": "Suphan Buri",
+    "region": "bangkok-central",
+    "x": 235.53,
+    "y": 568.05
+  },
+  {
+    "slug": "surat-thani",
+    "province": "Surat Thani",
+    "region": "southern-thailand",
+    "x": 185.88,
+    "y": 1083.38
+  },
+  {
+    "slug": "surin",
+    "province": "Surin",
+    "region": "isaan-northeast",
+    "x": 602.13,
+    "y": 535.76
+  },
+  {
+    "slug": "tak",
+    "province": "Tak",
+    "region": "western-mountain",
+    "x": 121.31,
+    "y": 380.05
+  },
+  {
+    "slug": "trang",
+    "province": "Trang",
+    "region": "southern-thailand",
+    "x": 210.81,
+    "y": 1257.52
+  },
+  {
+    "slug": "trat",
+    "province": "Trat",
+    "region": "eastern-seaboard",
+    "x": 504.61,
+    "y": 799.99
+  },
+  {
+    "slug": "ubon-ratchathani",
+    "province": "Ubon Ratchathani",
+    "region": "isaan-northeast",
+    "x": 738.18,
+    "y": 511.92
+  },
+  {
+    "slug": "udon-thani",
+    "province": "Udon Thani",
+    "region": "isaan-northeast",
+    "x": 530.05,
+    "y": 291.72
+  },
+  {
+    "slug": "uthai-thani",
+    "province": "Uthai Thani",
+    "region": "western-mountain",
+    "x": 212.7,
+    "y": 491.32
+  },
+  {
+    "slug": "uttaradit",
+    "province": "Uttaradit",
+    "region": "northern-thailand",
+    "x": 308.94,
+    "y": 260.02
+  },
+  {
+    "slug": "yala",
+    "province": "Yala",
+    "region": "southern-thailand",
+    "x": 374.02,
+    "y": 1378.19
+  },
+  {
+    "slug": "yasothon",
+    "province": "Yasothon",
+    "region": "isaan-northeast",
+    "x": 681.07,
+    "y": 447.92
+  }
+]

@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ThaiHub | Real Estate Gateway</title>
+    <meta
+      name="description"
+      content="Discover Thailand real estate opportunities by interactive region map."
+    />
+    <link
+      rel="icon"
+      href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="10" fill="%2302131f"/><path d="M16 45V24l16-13 16 13v21h-8V29L32 22l-8 7v16z" fill="%23e3ae4a"/></svg>'
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header" aria-label="Main navigation">
+      <a class="brand" href="#home" aria-label="ThaiHub home">
+        <span class="brand-mark" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </span>
+        <span>
+          <strong>ThaiHub</strong>
+          <small data-i18n="brandTag">Real Estate Gateway</small>
+        </span>
+      </a>
+
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav">
+        <i data-lucide="menu"></i>
+        <span class="sr-only">Menu</span>
+      </button>
+
+      <nav id="main-nav" class="main-nav">
+        <a href="#home" class="active" data-i18n="navHome">Home</a>
+        <a href="#properties" data-i18n="navProperties">Properties</a>
+        <a href="#regions" data-i18n="navRegions">Regions</a>
+        <a href="#invest" data-i18n="navInvest">Invest in Thailand</a>
+        <a href="#about" data-i18n="navAbout">About Us</a>
+        <a href="#contact" data-i18n="navContact">Contact</a>
+      </nav>
+
+      <div class="language-switcher" aria-label="Language">
+        <button type="button" class="active" data-lang="en">EN</button>
+        <button type="button" data-lang="ar">العربية</button>
+        <button type="button" data-lang="th">ไทย</button>
+      </div>
+    </header>
+
+    <main>
+      <section id="home" class="hero">
+        <div class="hero-media" aria-hidden="true"></div>
+        <div class="hero-content">
+          <p class="eyebrow" data-i18n="heroKicker">Exclusive Thailand Real Estate</p>
+          <h1 data-i18n="heroTitle">Discover Thailand</h1>
+          <p class="hero-lead" data-i18n="heroLead">
+            Your gateway to exclusive real estate opportunities across Bangkok, Phuket,
+            Chiang Mai, Pattaya, Khon Kaen, and Surat Thani.
+          </p>
+          <div class="hero-actions">
+            <a
+              class="primary-action"
+              href="https://wa.me/66644462456?text=Hello%20ThaiHub%2C%20I%20want%20to%20know%20more%20about%20Thailand%20real%20estate."
+              target="_blank"
+              rel="noreferrer"
+            >
+              <i data-lucide="message-circle"></i>
+              <span data-i18n="whatsapp">Contact on WhatsApp</span>
+            </a>
+            <a class="secondary-action" href="#regions" data-i18n="exploreMap">Explore map</a>
+          </div>
+        </div>
+      </section>
+
+      <section id="regions" class="region-section" aria-labelledby="region-heading">
+        <div class="section-heading">
+          <p class="eyebrow" data-i18n="regionKicker">Explore Thailand</p>
+          <h2 id="region-heading" data-i18n="regionTitle">Discover by Region</h2>
+        </div>
+
+        <div class="region-grid">
+          <article class="spotlight-card" aria-live="polite">
+            <div class="spotlight-image"></div>
+            <div class="spotlight-body">
+              <div>
+                <p class="region-type" id="active-area">Southwest (Andaman)</p>
+                <h3 id="active-name">Phuket</h3>
+              </div>
+
+              <div class="weather-row">
+                <span class="weather-icon" aria-hidden="true">
+                  <i data-lucide="sun-medium"></i>
+                </span>
+                <div>
+                  <strong id="active-temp">31°C</strong>
+                  <span id="active-weather">Sunny · 25°C - 33°C</span>
+                </div>
+              </div>
+
+              <div class="metric-stack" aria-label="Region metrics">
+                <div class="metric">
+                  <div class="metric-label">
+                    <span data-i18n="touristDensity">Tourist Density</span>
+                    <strong id="tourist-label">High</strong>
+                  </div>
+                  <span class="meter"><span id="tourist-meter"></span></span>
+                </div>
+                <div class="metric">
+                  <div class="metric-label">
+                    <span data-i18n="populationDensity">Population Density</span>
+                    <strong id="population-label">Medium</strong>
+                  </div>
+                  <span class="meter"><span id="population-meter"></span></span>
+                </div>
+                <div class="metric">
+                  <div class="metric-label">
+                    <span data-i18n="localLifestyle">Local Lifestyle</span>
+                    <strong id="lifestyle-label">Relaxed</strong>
+                  </div>
+                  <span class="meter"><span id="lifestyle-meter"></span></span>
+                </div>
+              </div>
+
+              <div class="best-for">
+                <span class="best-icon" aria-hidden="true"><i data-lucide="shield-check"></i></span>
+                <div>
+                  <small data-i18n="bestFor">Best For</small>
+                  <p id="active-best">Beach life, luxury, investment</p>
+                </div>
+              </div>
+
+              <a class="card-action" href="#properties">
+                <span data-i18n="viewProperties">View Properties</span>
+                <i data-lucide="arrow-right"></i>
+              </a>
+            </div>
+          </article>
+
+          <div
+            id="gadm-map-host"
+            class="map-panel"
+            data-map-src="assets/thailand-6-regions-gadm-provinces.svg"
+            aria-label="Interactive Thailand province map"
+          >
+            <object
+              id="gadm-map-object"
+              class="thai-gadm-map"
+              type="image/svg+xml"
+              data="assets/thailand-6-regions-gadm-provinces.svg"
+              aria-label="Interactive Thailand GADM province map grouped into six regions"
+            >
+              <a href="assets/thailand-6-regions-gadm-provinces.svg">Open Thailand map</a>
+            </object>
+          </div>
+
+          <aside class="region-list" aria-label="Thailand regions">
+            <button class="region-button active" type="button" data-region="northern-thailand">
+              <span class="region-button-copy">
+                <strong>Northern Thailand</strong>
+                <small>Chiang Mai, Chiang Rai, Nan</small>
+                <em>Mountain homes, culture, green lifestyle</em>
+              </span>
+              <i data-lucide="chevron-right"></i>
+            </button>
+            <button class="region-button" type="button" data-region="isaan-northeast">
+              <span class="region-button-copy">
+                <strong>Isaan / Northeast</strong>
+                <small>Khon Kaen, Udon Thani</small>
+                <em>Land, family homes, growth cities</em>
+              </span>
+              <i data-lucide="chevron-right"></i>
+            </button>
+            <button class="region-button" type="button" data-region="western-mountain">
+              <span class="region-button-copy">
+                <strong>Western / Mountain</strong>
+                <small>Kanchanaburi, Hua Hin inland</small>
+                <em>Nature retreats, larger land, quiet living</em>
+              </span>
+              <i data-lucide="chevron-right"></i>
+            </button>
+            <button class="region-button" type="button" data-region="bangkok-central">
+              <span class="region-button-copy">
+                <strong>Bangkok & Central</strong>
+                <small>Bangkok, Ayutthaya, Nonthaburi</small>
+                <em>Condos, rentals, business access</em>
+              </span>
+              <i data-lucide="chevron-right"></i>
+            </button>
+            <button class="region-button" type="button" data-region="eastern-seaboard">
+              <span class="region-button-copy">
+                <strong>Eastern Seaboard</strong>
+                <small>Pattaya, Chonburi, Rayong</small>
+                <em>Beach city, rentals, industrial corridor</em>
+              </span>
+              <i data-lucide="chevron-right"></i>
+            </button>
+            <button class="region-button" type="button" data-region="southern-thailand">
+              <span class="region-button-copy">
+                <strong>Southern Thailand</strong>
+                <small>Phuket, Krabi, Samui, Surat Thani</small>
+                <em>Villas, tourism rentals, island lifestyle</em>
+              </span>
+              <i data-lucide="chevron-right"></i>
+            </button>
+          </aside>
+        </div>
+
+        <div class="benefit-strip" id="invest">
+          <div>
+            <i data-lucide="home"></i>
+            <p><strong data-i18n="benefitTypesTitle">All Property Types</strong><span data-i18n="benefitTypesText">Villas, condos, land, hotels and more</span></p>
+          </div>
+          <div>
+            <i data-lucide="users-round"></i>
+            <p><strong data-i18n="benefitLifestyleTitle">For All Lifestyles</strong><span data-i18n="benefitLifestyleText">Invest, live, holiday or retire</span></p>
+          </div>
+          <div>
+            <i data-lucide="star"></i>
+            <p><strong data-i18n="benefitExclusiveTitle">Exclusive Opportunities</strong><span data-i18n="benefitExclusiveText">Handpicked properties and projects</span></p>
+          </div>
+          <div>
+            <i data-lucide="message-circle"></i>
+            <p><strong data-i18n="benefitWhatsappTitle">Easy Communication</strong><span data-i18n="benefitWhatsappText">Chat with us on WhatsApp</span></p>
+          </div>
+          <div>
+            <i data-lucide="badge-check"></i>
+            <p><strong data-i18n="benefitTrustTitle">Trusted & Local</strong><span data-i18n="benefitTrustText">Thai company with global vision</span></p>
+          </div>
+        </div>
+      </section>
+
+      <section id="properties" class="properties-section" aria-labelledby="properties-heading">
+        <div class="section-heading compact">
+          <p class="eyebrow" data-i18n="propertyKicker">Featured Opportunities</p>
+          <h2 id="properties-heading" data-i18n="propertyTitle">Ready-to-explore property routes</h2>
+        </div>
+        <div class="property-grid">
+          <article class="property-card project-property-card">
+            <img src="assets/projects/centara-p1-1.jpg" alt="Centara Sonrisa Residences and Suites Sriracha">
+            <span>Sriracha - Hotel</span>
+            <h3>Centara Sonrisa Residences & Suites</h3>
+            <p>145-room hotel opportunity near Pattaya, Laem Chabang, and U-Tapao Airport.</p>
+            <a class="property-card-link" href="property-centara-sonrisa.html">Details</a>
+          </article>
+          <article class="property-card project-property-card">
+            <img src="assets/projects/sonrisa-p1-1.jpg" alt="Sonrisa Sriracha Condominium">
+            <span>Sriracha - Condo</span>
+            <h3>Sonrisa Sriracha Condominium</h3>
+            <p>Seaside condominium units in Chon Buri with pool, fitness, sauna, and library facilities.</p>
+            <a class="property-card-link" href="property-sonrisa-sriracha.html">Details</a>
+          </article>
+        </div>
+      </section>
+
+      <section id="about" class="about-section" aria-labelledby="about-heading">
+        <div>
+          <p class="eyebrow" data-i18n="aboutKicker">About ThaiHub</p>
+          <h2 id="about-heading" data-i18n="aboutTitle">Regional insight before property selection</h2>
+        </div>
+        <p data-i18n="aboutText">
+          ThaiHub helps international buyers compare regions first, then match lifestyle,
+          rental demand, budget, and ownership goals to the right opportunities.
+        </p>
+      </section>
+
+      <section id="contact" class="contact-section" aria-label="Contact">
+        <div>
+          <p class="eyebrow" data-i18n="contactKicker">Start with the region</p>
+          <h2 data-i18n="contactTitle">Tell us where you want to explore</h2>
+        </div>
+        <a
+          class="primary-action"
+          href="https://wa.me/66644462456?text=Hello%20ThaiHub%2C%20I%20want%20to%20explore%20Thailand%20regions."
+          target="_blank"
+          rel="noreferrer"
+        >
+          <i data-lucide="message-circle"></i>
+          <span data-i18n="whatsapp">Contact on WhatsApp</span>
+        </a>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>ThaiHub</span>
+      <span data-i18n="footerText">Interactive Thailand real estate gateway.</span>
+    </footer>
+
+    <script src="assets/lucide.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
+
