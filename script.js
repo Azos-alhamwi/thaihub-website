@@ -350,6 +350,16 @@ let mapDocument = null;
 let thaiMapSvg = null;
 let originalMapViewBox = null;
 let mapZoomAnimation = null;
+let suppressMapClickUntil = 0;
+let mapGesture = {
+  pointers: new Map(),
+  startViewBox: null,
+  startDistance: 0,
+  startCenter: null,
+  startSvgPoint: null,
+  moved: false,
+  lastTapAt: 0,
+};
 let activeTooltipData = null;
 let provincePointIndex = {};
 let provincePoints = [];
@@ -417,6 +427,7 @@ let propertyPins = [
     province: "Chon Buri",
     title: "Centara Sonrisa Residences & Suites Sriracha",
     subtitle: "Hotel for sale - 145 rooms - Sriracha",
+    location: "Sriracha, Chon Buri",
     price: "THB 750M",
     image: "assets/projects/centara-p1-1.jpg",
     detailsUrl: "property-centara-sonrisa.html",
@@ -428,6 +439,7 @@ let propertyPins = [
     province: "Chon Buri",
     title: "Sonrisa Sriracha Condominium",
     subtitle: "1BR and duplex units - seaside Sriracha",
+    location: "Sriracha, Chon Buri",
     price: "From THB 2.9M",
     image: "assets/projects/sonrisa-p1-1.jpg",
     detailsUrl: "property-sonrisa-sriracha.html",
@@ -602,14 +614,10 @@ function ensureMapControls() {
   const controls = document.createElement("div");
   controls.className = "map-zoom-controls";
   controls.innerHTML = `
-    <button type="button" data-map-zoom="in" aria-label="Zoom in"><i data-lucide="plus"></i></button>
-    <button type="button" data-map-zoom="out" aria-label="Zoom out"><i data-lucide="minus"></i></button>
-    <button type="button" data-map-zoom="reset" aria-label="Reset map"><i data-lucide="maximize-2"></i></button>
+    <button type="button" data-map-zoom="reset" aria-label="Reset map"><i data-lucide="rotate-ccw"></i></button>
   `;
   mapHost.appendChild(controls);
 
-  controls.querySelector('[data-map-zoom="in"]').addEventListener("click", () => zoomMapBy(0.72));
-  controls.querySelector('[data-map-zoom="out"]').addEventListener("click", () => zoomMapBy(1.28));
   controls.querySelector('[data-map-zoom="reset"]').addEventListener("click", resetMapZoom);
 
   if (window.lucide) window.lucide.createIcons();
@@ -624,6 +632,20 @@ function getCurrentViewBox() {
 function getMapZoomLevel(box = getCurrentViewBox()) {
   if (!originalMapViewBox || !box) return 1;
   return originalMapViewBox.width / box.width;
+}
+
+function constrainMapViewBox(box) {
+  if (!originalMapViewBox) return box;
+  const width = Math.min(Math.max(box.width, 150), originalMapViewBox.width);
+  const height = Math.min(Math.max(box.height, 180), originalMapViewBox.height);
+  const maxX = originalMapViewBox.x + originalMapViewBox.width - width;
+  const maxY = originalMapViewBox.y + originalMapViewBox.height - height;
+  return {
+    x: Math.min(Math.max(box.x, originalMapViewBox.x), maxX),
+    y: Math.min(Math.max(box.y, originalMapViewBox.y), maxY),
+    width,
+    height,
+  };
 }
 
 function updateMapZoomState(box, zoomed = true) {
@@ -644,6 +666,7 @@ function applyMapViewBox(box, zoomed = true) {
 
 function setMapViewBox(box, zoomed = true, options = {}) {
   if (!thaiMapSvg) return;
+  box = constrainMapViewBox(box);
   const start = getCurrentViewBox();
   const animate = options.animate !== false && start;
   if (!animate) {
@@ -690,6 +713,186 @@ function zoomMapBy(scale) {
     width: nextWidth,
     height: nextHeight,
   });
+}
+
+function screenPointToSvg(clientX, clientY, box = getCurrentViewBox()) {
+  if (!thaiMapSvg || !box) return null;
+  const rect = thaiMapSvg.getBoundingClientRect();
+  return {
+    x: box.x + ((clientX - rect.left) / rect.width) * box.width,
+    y: box.y + ((clientY - rect.top) / rect.height) * box.height,
+  };
+}
+
+function getPointerCenter(pointers = [...mapGesture.pointers.values()]) {
+  const total = pointers.reduce(
+    (sum, pointer) => ({ x: sum.x + pointer.clientX, y: sum.y + pointer.clientY }),
+    { x: 0, y: 0 },
+  );
+  return { x: total.x / pointers.length, y: total.y / pointers.length };
+}
+
+function getPointerDistance(pointers = [...mapGesture.pointers.values()]) {
+  if (pointers.length < 2) return 0;
+  return Math.hypot(
+    pointers[0].clientX - pointers[1].clientX,
+    pointers[0].clientY - pointers[1].clientY,
+  );
+}
+
+function zoomToScreenPoint(clientX, clientY, scale) {
+  const current = getCurrentViewBox();
+  const svgPoint = screenPointToSvg(clientX, clientY, current);
+  const rect = thaiMapSvg?.getBoundingClientRect();
+  if (!current || !svgPoint || !rect) return;
+  const nextWidth = Math.min(Math.max(current.width * scale, 150), originalMapViewBox.width);
+  const nextHeight = Math.min(Math.max(current.height * scale, 180), originalMapViewBox.height);
+  setMapViewBox(
+    {
+      x: svgPoint.x - ((clientX - rect.left) / rect.width) * nextWidth,
+      y: svgPoint.y - ((clientY - rect.top) / rect.height) * nextHeight,
+      width: nextWidth,
+      height: nextHeight,
+    },
+    nextWidth < originalMapViewBox.width,
+    { duration: 320 },
+  );
+}
+
+function panMapByPixels(deltaX, deltaY, startViewBox = getCurrentViewBox()) {
+  const rect = thaiMapSvg?.getBoundingClientRect();
+  if (!rect || !startViewBox) return;
+  setMapViewBox(
+    {
+      x: startViewBox.x - (deltaX / rect.width) * startViewBox.width,
+      y: startViewBox.y - (deltaY / rect.height) * startViewBox.height,
+      width: startViewBox.width,
+      height: startViewBox.height,
+    },
+    getMapZoomLevel(startViewBox) > 1.02,
+    { animate: false },
+  );
+}
+
+function updatePinchZoom() {
+  const pointers = [...mapGesture.pointers.values()];
+  if (pointers.length < 2 || !mapGesture.startViewBox || !mapGesture.startSvgPoint) return;
+  const distance = getPointerDistance(pointers);
+  const center = getPointerCenter(pointers);
+  const rect = thaiMapSvg?.getBoundingClientRect();
+  if (!distance || !rect) return;
+
+  const scale = mapGesture.startDistance / distance;
+  const nextWidth = Math.min(Math.max(mapGesture.startViewBox.width * scale, 150), originalMapViewBox.width);
+  const nextHeight = Math.min(Math.max(mapGesture.startViewBox.height * scale, 180), originalMapViewBox.height);
+  setMapViewBox(
+    {
+      x: mapGesture.startSvgPoint.x - ((center.x - rect.left) / rect.width) * nextWidth,
+      y: mapGesture.startSvgPoint.y - ((center.y - rect.top) / rect.height) * nextHeight,
+      width: nextWidth,
+      height: nextHeight,
+    },
+    nextWidth < originalMapViewBox.width,
+    { animate: false },
+  );
+}
+
+function bindMapGestures() {
+  if (!mapHost || mapHost.dataset.gesturesBound === "true") return;
+  mapHost.dataset.gesturesBound = "true";
+
+  mapHost.addEventListener("pointerdown", (event) => {
+    if (event.target.closest("a, button")) return;
+    const viewBox = getCurrentViewBox();
+    if (!viewBox) return;
+    try {
+      mapHost.setPointerCapture?.(event.pointerId);
+    } catch (error) {
+      // Synthetic tests and a few older mobile browsers can reject capture.
+    }
+    mapGesture.pointers.set(event.pointerId, {
+      clientX: event.clientX,
+      clientY: event.clientY,
+      startX: event.clientX,
+      startY: event.clientY,
+    });
+    mapGesture.startViewBox = viewBox;
+    mapGesture.moved = false;
+
+    if (mapGesture.pointers.size >= 2) {
+      const pointers = [...mapGesture.pointers.values()];
+      mapGesture.startDistance = getPointerDistance(pointers);
+      mapGesture.startCenter = getPointerCenter(pointers);
+      mapGesture.startSvgPoint = screenPointToSvg(
+        mapGesture.startCenter.x,
+        mapGesture.startCenter.y,
+        viewBox,
+      );
+      hideMapTooltip();
+    }
+  });
+
+  mapHost.addEventListener(
+    "pointermove",
+    (event) => {
+      if (!mapGesture.pointers.has(event.pointerId)) return;
+      const pointer = mapGesture.pointers.get(event.pointerId);
+      pointer.clientX = event.clientX;
+      pointer.clientY = event.clientY;
+      const movedDistance = Math.hypot(pointer.clientX - pointer.startX, pointer.clientY - pointer.startY);
+      if (movedDistance > 4) {
+        mapGesture.moved = true;
+        suppressMapClickUntil = Date.now() + 350;
+      }
+
+      if (mapGesture.pointers.size >= 2) {
+        event.preventDefault();
+        updatePinchZoom();
+        return;
+      }
+
+      if (mapGesture.moved && mapGesture.startViewBox) {
+        event.preventDefault();
+        panMapByPixels(event.clientX - pointer.startX, event.clientY - pointer.startY, mapGesture.startViewBox);
+      }
+    },
+    { passive: false },
+  );
+
+  ["pointerup", "pointercancel", "pointerleave"].forEach((type) => {
+    mapHost.addEventListener(type, (event) => {
+      const pointer = mapGesture.pointers.get(event.pointerId);
+      mapGesture.pointers.delete(event.pointerId);
+      if (!pointer) return;
+
+      const wasTap = !mapGesture.moved && Math.hypot(event.clientX - pointer.startX, event.clientY - pointer.startY) < 8;
+      if (type === "pointerup" && wasTap && !event.target.closest(".property-marker, .city-marker")) {
+        const now = Date.now();
+        if (now - mapGesture.lastTapAt < 320) {
+          zoomToScreenPoint(event.clientX, event.clientY, 0.68);
+          suppressMapClickUntil = now + 350;
+        }
+        mapGesture.lastTapAt = now;
+      }
+
+      if (mapGesture.pointers.size === 1) {
+        const remaining = [...mapGesture.pointers.values()][0];
+        mapGesture.startViewBox = getCurrentViewBox();
+        remaining.startX = remaining.clientX;
+        remaining.startY = remaining.clientY;
+      }
+    });
+  });
+
+  mapHost.addEventListener(
+    "wheel",
+    (event) => {
+      if (!event.ctrlKey && Math.abs(event.deltaY) < 18) return;
+      event.preventDefault();
+      zoomToScreenPoint(event.clientX, event.clientY, event.deltaY > 0 ? 1.12 : 0.88);
+    },
+    { passive: false },
+  );
 }
 
 function resetMapZoom() {
@@ -840,13 +1043,17 @@ function renderPropertyPins() {
     halo.classList.add("property-marker-halo");
     halo.setAttribute("r", "18");
 
-    const dot = document.createElementNS(namespace, "circle");
-    dot.classList.add("property-marker-dot");
-    dot.setAttribute("r", "6");
-
     const diamond = document.createElementNS(namespace, "path");
     diamond.classList.add("property-marker-diamond");
-    diamond.setAttribute("d", "M0 -15 L13 0 L0 15 L-13 0 Z");
+    diamond.setAttribute(
+      "d",
+      "M0 -18 C-8 -18 -14 -12 -14 -4 C-14 7 0 19 0 19 C0 19 14 7 14 -4 C14 -12 8 -18 0 -18 Z",
+    );
+
+    const dot = document.createElementNS(namespace, "circle");
+    dot.classList.add("property-marker-dot");
+    dot.setAttribute("cy", "-4");
+    dot.setAttribute("r", "4.8");
 
     const title = document.createElementNS(namespace, "title");
     title.textContent = pin.title || `Property in ${point.province}`;
@@ -943,20 +1150,33 @@ function showMapTooltip(data) {
   const tooltip = ensureMapTooltip();
   if (!tooltip) return;
   activeTooltipData = data;
+  if (data.markerType === "property" && data.id) {
+    thaiMapSvg?.querySelectorAll(".property-marker.focused").forEach((marker) => {
+      marker.classList.remove("focused");
+    });
+    thaiMapSvg
+      ?.querySelector(`[data-marker-type="property"][data-marker-id="${data.id}"]`)
+      ?.classList.add("focused");
+  }
   const detailsLink = data.detailsUrl
-    ? `<a class="tooltip-action" href="${data.detailsUrl}">Details</a>`
+    ? `<a class="tooltip-action" href="${data.detailsUrl}">View Details</a>`
     : "";
   const whatsappLink =
     data.markerType === "property"
       ? `<a class="tooltip-action whatsapp" href="https://wa.me/66644462456?text=${encodeURIComponent(`Hello ThaiHub, I want details about ${data.title}.`)}" target="_blank" rel="noreferrer">WhatsApp</a>`
       : "";
+  const media = data.markerType === "property" ? "" : `<img src="${data.image}" alt="" />`;
+  tooltip.dataset.markerType = data.markerType || "";
   tooltip.innerHTML = `
-    <img src="${data.image}" alt="" />
-    <span>${data.badge}</span>
+    <button class="tooltip-close" type="button" aria-label="Close project card"><i data-lucide="x"></i></button>
+    ${media}
+    <span>${data.markerType === "property" ? data.location || data.badge : data.badge}</span>
     <strong>${data.title}</strong>
     <small>${data.subtitle || ""}</small>
     ${detailsLink || whatsappLink ? `<div class="tooltip-actions">${detailsLink}${whatsappLink}</div>` : ""}
   `;
+  tooltip.querySelector(".tooltip-close")?.addEventListener("click", hideMapTooltip);
+  if (window.lucide) window.lucide.createIcons();
   setTooltipPosition(tooltip, data.x, data.y);
   tooltip.classList.add("visible");
 }
@@ -972,8 +1192,15 @@ function bindMarkerTooltip(marker, data) {
   marker.addEventListener("focus", () => showMapTooltip(data));
   marker.addEventListener("click", (event) => {
     event.stopPropagation();
+    if (Date.now() < suppressMapClickUntil) return;
     zoomToPoint(data.x, data.y, data.region);
     showMapTooltip(data);
+    if (data.markerType === "property") {
+      thaiMapSvg?.querySelectorAll(".property-marker.focused").forEach((focusedMarker) => {
+        focusedMarker.classList.remove("focused");
+      });
+      marker.classList.add("focused");
+    }
   });
   marker.addEventListener("keydown", (event) => {
     if (event.key === "Enter" || event.key === " ") {
@@ -999,7 +1226,10 @@ function attachGadmMap(scope) {
     group.dataset.bound = "true";
     const regionId = group.id;
 
-    group.addEventListener("click", () => zoomToRegion(regionId));
+    group.addEventListener("click", () => {
+      if (Date.now() < suppressMapClickUntil) return;
+      zoomToRegion(regionId);
+    });
     group.addEventListener("mouseenter", () => setActiveRegion(regionId));
     group.addEventListener("focus", () => setActiveRegion(regionId));
     group.addEventListener("keydown", (event) => {
@@ -1030,6 +1260,7 @@ async function loadGadmMap() {
     thaiMapSvg = inlineSvg;
     originalMapViewBox = getCurrentViewBox();
     ensureMapControls();
+    bindMapGestures();
     await loadProvincePointIndex();
     attachGadmMap(document);
     focusPropertyFromUrl();
@@ -1037,9 +1268,11 @@ async function loadGadmMap() {
     if (mapObject) {
       mapObject.addEventListener("load", () => {
         attachGadmMap(mapObject.contentDocument);
+        bindMapGestures();
         focusPropertyFromUrl();
       });
       attachGadmMap(mapObject.contentDocument);
+      bindMapGestures();
     }
   }
 }
